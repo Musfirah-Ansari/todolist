@@ -1,23 +1,15 @@
-
-
 import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  // State to hold the list of todos
   const [todos, setTodos] = useState([]);
-
-  // State to track search input
   const [search, setSearch] = useState("");
-
-  // State for the form input fields
   const [newTodo, setNewTodo] = useState({
     title: "",
     details: "",
     dueDate: "",
   });
 
-  // Handle form input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewTodo({
@@ -26,22 +18,19 @@ function App() {
     });
   };
 
-  // Add new todo item
   const handleAddTodo = () => {
     if (newTodo.title && newTodo.details && newTodo.dueDate) {
       setTodos([...todos, { ...newTodo, id: Date.now() }]);
-      setNewTodo({ title: "", details: "", dueDate: "" }); // Reset form
+      setNewTodo({ title: "", details: "", dueDate: "" });
     } else {
-      alert("Please fill in all fields");
+      alert("Please fill all the fields");
     }
   };
 
-  // Delete a todo item
   const handleDeleteTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  // Edit a todo item
   const handleEditTodo = (id) => {
     const todo = todos.find((todo) => todo.id === id);
     setNewTodo({
@@ -49,44 +38,40 @@ function App() {
       details: todo.details,
       dueDate: todo.dueDate,
     });
-    setTodos(todos.filter((todo) => todo.id !== id)); // Remove the item from the list temporarily
+    setTodos(todos.filter((todo) => todo.id !== id)); 
   };
 
-  // Handle search filter
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
 
-  // Filtered todos based on search query
   const filteredTodos = todos.filter((todo) =>
     todo.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div className="App">
-      <h1>Todo List</h1>
+      <h1>Todo List Task</h1>
 
-      {/* Search Box */}
       <input
         type="text"
-        placeholder="Search..."
+        placeholder="Search here your todos"
         value={search}
         onChange={handleSearchChange}
         className="search-input"
       />
 
-      {/* Todo form */}
       <div className="todo-form">
         <input
           type="text"
           name="title"
-          placeholder="Title"
+          placeholder="Title of your todos"
           value={newTodo.title}
           onChange={handleInputChange}
         />
         <textarea
           name="details"
-          placeholder="Details"
+          placeholder="description of your todos"
           value={newTodo.details}
           onChange={handleInputChange}
         ></textarea>
@@ -99,7 +84,6 @@ function App() {
         <button onClick={handleAddTodo}>Add</button>
       </div>
 
-      {/* Todo List */}
       <ul className="todo-list">
         {filteredTodos.map((todo) => (
           <li key={todo.id} className="todo-item">
@@ -116,4 +100,3 @@ function App() {
 }
 
 export default App;
-
